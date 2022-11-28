@@ -28,6 +28,8 @@ public abstract class TableRowWithNulls
     public volatile long t5 = 1L;
     public volatile long t6 = 1L;
     public volatile long t7 = 1L;
+
+    public volatile long t15 = 1L;
     private final long nullBitMap;
     public volatile long t8 = 1L;
     public volatile long t9 = 1L;
@@ -46,7 +48,7 @@ public abstract class TableRowWithNulls
 
     public long getPadding()
     {
-        return t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10 + t11 + t12 + t13 + t14;
+        return t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10 + t11 + t12 + t13 + t14 + t15;
     }
 
     private boolean isNull(GeneratorColumn column)
