@@ -21,8 +21,8 @@ import static io.trino.tpcds.type.Date.fromJulianDays;
 public abstract class TableRowWithNulls
         implements TableRow
 {
-    private long nullBitMap;
-    private GeneratorColumn firstColumn;
+    private final long nullBitMap;
+    private final GeneratorColumn firstColumn;
 
     protected TableRowWithNulls(long nullBitMap, GeneratorColumn firstColumn)
     {
