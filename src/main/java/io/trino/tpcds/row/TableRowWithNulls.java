@@ -21,10 +21,21 @@ import static io.trino.tpcds.type.Date.fromJulianDays;
 public abstract class TableRowWithNulls
         implements TableRow
 {
-    public volatile long t1, t2, t3, t4, t5, t6, t7;
+    public volatile long t1 = 1L;
+    public volatile long t2 = 1L;
+    public volatile long t3 = 1L;
+    public volatile long t4 = 1L;
+    public volatile long t5 = 1L;
+    public volatile long t6 = 1L;
+    public volatile long t7 = 1L;
     private final long nullBitMap;
-
-    public volatile long t8, t9, t10, t11, t12, t13, t14;
+    public volatile long t8 = 1L;
+    public volatile long t9 = 1L;
+    public volatile long t10 = 1L;
+    public volatile long t11 = 1L;
+    public volatile long t12 = 1L;
+    public volatile long t13 = 1L;
+    public volatile long t14 = 1L;
     private final GeneratorColumn firstColumn;
 
     protected TableRowWithNulls(long nullBitMap, GeneratorColumn firstColumn)
@@ -33,7 +44,8 @@ public abstract class TableRowWithNulls
         this.firstColumn = firstColumn;
     }
 
-    public long getPadding() {
+    public long getPadding()
+    {
         return t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10 + t11 + t12 + t13 + t14;
     }
 
