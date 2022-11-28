@@ -21,6 +21,7 @@ import static io.trino.tpcds.type.Date.fromJulianDays;
 public abstract class TableRowWithNulls
         implements TableRow
 {
+    @jdk.internal.vm.annotation.Contended
     private final long nullBitMap;
     private final GeneratorColumn firstColumn;
 
