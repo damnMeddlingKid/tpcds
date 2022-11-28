@@ -83,7 +83,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <release>17</release>
+                    <target>17</target>
+                    <source>17</source>
+                    <compilerArgs>
+                        <arg>--add-exports</arg><arg>java.base/jdk.internal.vm.annotation=io.trino.tpcds.row</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

@@ -21,14 +21,20 @@ import static io.trino.tpcds.type.Date.fromJulianDays;
 public abstract class TableRowWithNulls
         implements TableRow
 {
-    @jdk.internal.vm.annotation.Contended
+    public volatile long t1, t2, t3, t4, t5, t6, t7;
     private final long nullBitMap;
+
+    public volatile long t8, t9, t10, t11, t12, t13, t14;
     private final GeneratorColumn firstColumn;
 
     protected TableRowWithNulls(long nullBitMap, GeneratorColumn firstColumn)
     {
         this.nullBitMap = nullBitMap;
         this.firstColumn = firstColumn;
+    }
+
+    public long getPadding() {
+        return t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10 + t11 + t12 + t13 + t14;
     }
 
     private boolean isNull(GeneratorColumn column)
