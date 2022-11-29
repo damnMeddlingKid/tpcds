@@ -1,30 +1,13 @@
-/*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package io.trino.tpcds.type;
-
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
 import static java.util.Locale.ENGLISH;
 
-public class Decimal
+public class Square
 {
-    public static final Decimal ZERO = new Decimal(0, 2);
-    public static final Decimal ONE_HALF = new Decimal(50, 2);
-    public static final Decimal NINE_PERCENT = new Decimal(9, 2);
-    public static final Decimal ONE_HUNDRED = new Decimal(10000, 2);
-    public static final Decimal ONE = new Decimal(100, 2);
+    public static final Square ZERO = new Square(0, 2);
+    public static final Square ONE_HALF = new Square(50, 2);
+    public static final Square NINE_PERCENT = new Square(9, 2);
+    public static final Square ONE_HUNDRED = new Square(10000, 2);
+    public static final Square ONE = new Square(100, 2);
 
     // XXX: Definitions of precision and scale are reversed. This was done to
     // make it easier to follow the C code, which reverses the definitions.  Here,
@@ -34,14 +17,14 @@ public class Decimal
     private final int precision;
     private final long number;
 
-    public Decimal(long number, int precision)
+    public Square(long number, int precision)
     {
         //checkArgument(precision >= 0, "precision must be greater than or equal to zero");
         this.precision = precision;
         this.number = number;
     }
 
-    public static Decimal parseDecimal(String decimalString)
+    public static Square parseDecimal(String decimalString)
     {
         long number;
         int precision;
@@ -55,31 +38,34 @@ public class Decimal
             precision = fractional.length();
             number = parseInt(decimalString.substring(0, decimalPointIndex) + fractional);
         }
-        return new Decimal(number, precision);
+        return new Square(number, precision);
     }
 
-    public static Decimal add(Decimal decimal1, Decimal decimal2)
+    public static Square add(Square decimal1, Square decimal2)
     {
         int precision = Math.max(decimal1.precision, decimal2.precision);
         long number = decimal1.number + decimal2.number;  // This is not mathematically correct when the precisions aren't the same, but it's what the C code does
-        return new Decimal(number, precision);
+        return new Square(number, precision);
     }
 
-    public static Decimal subtract(Decimal decimal1, Decimal decimal2)
+    public static Square subtract(Square decimal1, Square decimal2)
     {
         int precision = Math.max(decimal1.precision, decimal2.precision);
         long number = decimal1.number - decimal2.number;  // again following C code
-        return new Decimal(number, precision);
+        return new Square(number, precision);
     }
 
-    public static Decimal multiply(Decimal decimal1, Decimal decimal2)
+    public static Square multiply(Square decimal1, Square decimal2)
     {
         int precision = Math.max(decimal1.precision, decimal2.precision);
         long number = decimal1.number * decimal2.number;
-        return new Decimal(number, precision);
+        for (int i = decimal1.precision + decimal2.precision; i > precision; i--) {
+            number /= 10;  // Always round down, I guess
+        }
+        return new Square(number, precision);
     }
 
-    public static Decimal divide(Decimal decimal1, Decimal decimal2)
+    public static Square divide(Square decimal1, Square decimal2)
     {
         float f1 = (float) decimal1.number;
         int precision = Math.max(decimal1.precision, decimal2.precision);
@@ -97,17 +83,17 @@ public class Decimal
         }
 
         int number = (int) (f1 / f2);
-        return new Decimal(number, precision);
+        return new Square(number, precision);
     }
 
-    public static Decimal negate(Decimal decimal)
+    public static Square negate(Square decimal)
     {
-        return new Decimal(decimal.number * -1, decimal.precision);
+        return new Square(decimal.number * -1, decimal.precision);
     }
 
-    public static Decimal fromInteger(int from)
+    public static Square fromInteger(int from)
     {
-        return new Decimal(from, 0);
+        return new Square(from, 0);
     }
 
     public int getPrecision()
