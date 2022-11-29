@@ -16,7 +16,6 @@ package io.trino.tpcds.type;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
-import static java.util.Locale.ENGLISH;
 
 public class Decimal
 {
@@ -153,10 +152,8 @@ public class Decimal
         // The C code has a different function called dectostr in decimal.c that
         // does a proper string representation but it never gets called.
         double temp = number;
-        for (int i = 0; i < precision; i++) {
-            temp /= 10.0;
-        }
-
-        return String.format(ENGLISH, "%." + precision + "f", temp);
+        double denom = Math.pow(10.0, precision);
+        temp = temp / denom;
+        return "" + temp;
     }
 }
