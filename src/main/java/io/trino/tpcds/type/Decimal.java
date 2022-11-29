@@ -20,6 +20,27 @@ import static java.util.Locale.ENGLISH;
 
 public class Decimal
 {
+    private static final long[] POWERS_OF_TEN = {
+            1L,
+            10L,
+            100L,
+            1_000L,
+            10_000L,
+            100_000L,
+            1_000_000L,
+            10_000_000L,
+            100_000_000L,
+            1_000_000_000L,
+            10_000_000_000L,
+            100_000_000_000L,
+            1_000_000_000_000L,
+            10_000_000_000_000L,
+            100_000_000_000_000L,
+            1_000_000_000_000_000L,
+            10_000_000_000_000_000L,
+            100_000_000_000_000_000L,
+            1000_000_000_000_000_000L
+    };
     public static final Decimal ZERO = new Decimal(0, 2);
     public static final Decimal ONE_HALF = new Decimal(50, 2);
     public static final Decimal NINE_PERCENT = new Decimal(9, 2);
@@ -36,7 +57,7 @@ public class Decimal
 
     public Decimal(long number, int precision)
     {
-        //checkArgument(precision >= 0, "precision must be greater than or equal to zero");
+        checkArgument(precision >= 0, "precision must be greater than or equal to zero");
         this.precision = precision;
         this.number = number;
     }
@@ -76,7 +97,10 @@ public class Decimal
     {
         int precision = Math.max(decimal1.precision, decimal2.precision);
         long number = decimal1.number * decimal2.number;
-        return new Decimal(number, precision);
+        int numIter = (decimal1.precision + decimal2.precision) - precision;
+        long power = POWERS_OF_TEN[numIter];
+
+        return new Decimal(number / power, precision);
     }
 
     public static Decimal divide(Decimal decimal1, Decimal decimal2)
