@@ -16,7 +16,6 @@ package io.trino.tpcds.type;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Integer.parseInt;
-import static java.util.Locale.ENGLISH;
 
 public class Decimal
 {
@@ -136,6 +135,6 @@ public class Decimal
             temp /= 10.0;
         }
 
-        return String.format(ENGLISH, "%." + precision + "f", temp);
+        return String.format("%." + precision + "f", temp);
     }
 }
